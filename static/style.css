@@ -1,0 +1,65 @@
+/* Existing animated background + glass card styles stay the same */
+
+.result {
+    margin-top: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Sentiment Colors */
+.positive {
+    color: #2e7d32;
+}
+
+.negative {
+    color: #c62828;
+}
+
+.neutral {
+    color: #424242;
+}
+
+/* Confidence Progress Bar */
+.progress-bar {
+    width: 80%;
+    height: 15px;
+    background-color: #ddd;
+    border-radius: 10px;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.fill {
+    height: 100%;
+    transition: width 1s ease-in-out;
+    border-radius: 10px;
+}
+
+.positive .fill {
+    background-color: #4caf50;
+}
+
+.negative .fill {
+    background-color: #f44336;
+}
+
+.neutral .fill {
+    background-color: #9e9e9e;
+}
+.wordcloud {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.wordcloud img {
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease;
+}
+
+.wordcloud img:hover {
+    transform: scale(1.05);
+}

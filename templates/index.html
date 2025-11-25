@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sentiment Analysis Using NLP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Background Animation */
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      font-family: 'Poppins', sans-serif;
+      color: #222;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Particle Background Layer */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Heading */
+    h1 {
+      color: white;
+      margin-top: 30px;
+      font-size: 2.3rem;
+      letter-spacing: 1px;
+    }
+
+    textarea {
+      width: 50%;
+      height: 80px;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1rem;
+      resize: none;
+      outline: none;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 25px;
+      border-radius: 8px;
+      background-color: white;
+      color: #333;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background-color: #333;
+      color: white;
+    }
+
+    .result-box {
+      background: rgba(255,255,255,0.92);
+      border-radius: 20px;
+      margin: 30px auto;
+      width: 75%;
+      padding: 25px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.3);
+      text-align: center;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-box h2 {
+      color: #2e8b57;
+      margin-bottom: 10px;
+    }
+
+    img {
+      border-radius: 15px;
+      margin-top: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      max-width: 80%;
+      height: auto;
+    }
+
+    /* Top 5 words table */
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      width: 60%;
+    }
+
+    th, td {
+      padding: 10px 15px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: #23a6d5;
+      color: white;
+      font-weight: 600;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <h1>💬 Sentiment Analysis Using NLP</h1>
+
+  <form method="POST" action="/" style="margin-top: 20px;">
+    <textarea name="text" placeholder="Type or paste your text here..."></textarea><br>
+    <button type="submit">Analyze Sentiment</button>
+  </form>
+
+  {% if sentiment %}
+  <div class="result-box">
+    <h2>Sentiment: {{ sentiment }}</h2>
+    <p><strong>Confidence:</strong> {{ confidence }}%</p>
+    <p><strong>Word Count:</strong> {{ word_count }}</p>
+    <p><strong>Polarity Score:</strong> {{ polarity }}</p>
+
+    <h3>Word Cloud Visualization</h3>
+    <img src="{{ url_for('static', filename='wordcloud.png') }}?v={{ timestamp }}" alt="Word Cloud">
+
+    {% if top_words %}
+    <h3>Top 5 Most Frequent Words</h3>
+    <table>
+      <tr>
+        <th>Word</th>
+        <th>Count</th>
+      </tr>
+      {% for word, count in top_words %}
+      <tr>
+        <td>{{ word }}</td>
+        <td>{{ count }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- Particle.js script -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+  particlesJS("particles-js", {
+    "particles": {
+      "number": { "value": 80 },
+      "color": { "value": "#ffffff" },
+      "shape": { "type": "circle" },
+      "opacity": { "value": 0.5 },
+      "size": { "value": 3 },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": { "enable": true, "speed": 3 }
+    },
+    "interactivity": {
+      "events": {
+        "onhover": { "enable": true, "mode": "grab" }
+      }
+    },
+    "retina_detect": true
+  });
+  </script>
+</body>
+</html>
